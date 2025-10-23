@@ -19,11 +19,10 @@ def consulta_mongo(conexion, coleccion):
         if "_id" in df.columns:
             df = df.drop(columns=["_id"])
 
-        print(f"\n✅ Consulta exitosa de {coleccion}")
-        print(f"   - Filas: {df.shape[0]}")
-        print(f"   - Columnas: {df.shape[1]}")
-        print(f"   - Memoria utilizada: {df.memory_usage(deep=True).sum() / 1024**2:.2f} MB")
-        print(f"   - Primeros 5 registros: \n{df.head()}")
+        print(f"\n  ✅ Consulta exitosa de {coleccion}")
+        print(f"        - Filas: {df.shape[0]}")
+        print(f"        - Columnas: {df.shape[1]}")
+        print(f"        - Memoria utilizada: {df.memory_usage(deep=True).sum() / 1024**2:.2f} MB")
         return df
 
     except pymongo.Error as e:
