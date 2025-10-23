@@ -7,8 +7,7 @@ def conectar_mongo():
         print("✅ Conexión exitosa a MongoDB")
         return conexion
     except pymongo.Error as e:
-        print(f"❌ Error de conexión: {e}")
-        return None
+        raise Exception(f"❌ Error de conexión: {e}")
 
 def consulta_mongo(conexion, coleccion):
     try:
@@ -28,23 +27,4 @@ def consulta_mongo(conexion, coleccion):
         return df
 
     except pymongo.Error as e:
-        print(f"❌ Error de consulta: {e}")
-        return None
-
-def main():
-    print("=== Conexión a MongoDB desde Python ===\n")
-    # 1. Conectar a MongoDB
-    conexion = conectar_mongo()
-    
-    if conexion:
-        # Cargar datos de las colecciones
-        df_listings = consulta_mongo(conexion, "Listings")
-        df_reviews = consulta_mongo(conexion, "Reviews")
-        df_calendar = consulta_mongo(conexion, "Calendar")
-        
-        # Cerrar conexión
-        conexion.close()
-        print("\n🔒 Conexión cerrada")
-
-if __name__ == "__main__":
-    main()
+        raise Exception(f"❌ Error de consulta: {e}")
