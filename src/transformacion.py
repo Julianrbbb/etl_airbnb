@@ -1,16 +1,17 @@
 import pandas as pd
 import numpy as np
 import ast
+import unicodedata
 
 __all__ = ['transformacion_df']
 
 def transformacion_df(df_listings: pd.DataFrame, df_reviews: pd.DataFrame, df_calendar: pd.DataFrame):
 
-    df_listings, df_host, df_verification = _transformacion_listings(df_listings)
+    df_listings, df_host, df_verification, df_amenities_listings, df_amenities = _transformacion_listings(df_listings)
     df_reviews, df_reviewer = _transformacion_reviews(df_reviews, df_listings['id'])
     df_calendar = _transformacion_calendar(df_calendar, df_listings['id'])
 
-    return df_listings, df_reviews, df_calendar, df_host, df_verification, df_reviewer
+    return df_listings, df_reviews, df_calendar, df_host, df_verification, df_amenities_listings, df_amenities, df_reviewer
 
 def _transformacion_listings(df_listings: pd.DataFrame):
 
@@ -78,11 +79,6 @@ def _transformacion_listings(df_listings: pd.DataFrame):
     print(f"            - Filas: {df_verification.shape[0]}")
     print(f"            - Columnas: {df_verification.shape[1]}")
     print(f"            - Primeros 5 registros: \n{df_verification.head()}")
-
-    print("\n   4.5. Abstracion de df_amenities")
-    print("         Se abstrea el df_amenities del df_listings, y eliminando los amenities de listing")
-
-    df_amenities = df_listings[['id', 'amenities']].drop_duplicates()
 
     print("\n   4.5. Limpieza de df_listings validando con df_host")
     print("         Se eliminaran los campos de df_host y se limpiara todos los listings que no tengan un host valido")
@@ -159,11 +155,125 @@ def _transformacion_listings(df_listings: pd.DataFrame):
     print(f"            - Columnas: {df_listings.shape[1]}")
     print(f"            - Primeros 5 registros: \n{df_listings.head()}")
 
-    return (df_listings, df_host, df_verification)
+    print("\n   4.8. Abstracion de df_amenities_listings")
+    print("         Se abstrea el df_amenities_listings del df_listings y se elimina de df_listings")
+
+    df_amenities_listings = df_listings[['id', 'amenities']].copy()
+    df_amenities_listings['amenities_str'] = df_amenities_listings['amenities'].astype(str)
+    df_amenities_listings = df_amenities_listings.drop_duplicates(subset=['id', 'amenities_str']).drop(columns='amenities_str')
+    df_listings = df_listings.drop(['amenities'], axis=1)
+
+    print("         Se transforma los amenities en lista de py")
+    df_amenities_listings['amenities'] = df_amenities_listings['amenities'].apply(
+        lambda x: ast.literal_eval(x) if isinstance(x, str) else x
+    )
+
+    print("         Se 'explota' cada amenities para ser asignado uno a uno a su listing")
+    df_amenities_listings = (
+        df_amenities_listings[['id', 'amenities']]
+        .explode('amenities')
+        .reset_index(drop=True)
+    )
+
+    print("\n       ✅ df_amenities_listings")
+    print(f"            - Filas: {df_amenities_listings.shape[0]}")
+    print(f"            - Columnas: {df_amenities_listings.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_amenities_listings.head()}")
+
+    print("\n   4.9. Abstracion de df_amenities_p")
+
+    df_amenities_p = df_amenities_listings[['amenities']].drop_duplicates().reset_index(drop=True)
+
+    print("\n       ✅ df_amenities")
+    print(f"            - Filas: {df_amenities_p.shape[0]}")
+    print(f"            - Columnas: {df_amenities_p.shape[1]}")
+
+    print("\n       Limpieza de amenities repetidos y calidad de data")
+    df_amenities_p['amenities_clean'] = df_amenities_p['amenities'].apply(_clean_text)
+
+    print("\n       ✅ df_amenities_p")
+    print(f"            - Filas: {df_amenities_p.shape[0]}")
+    print(f"            - Columnas: {df_amenities_p.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_amenities_p.head()}")
+
+    print("\n   4.10. Transformacion amenities limpios a df_amenities_listings")
+    print("\n       Reemplazar los amenities_clean en amenities de df_amenities_listings y renombre del id a listing_id")
+
+    df_amenities_listings = (
+        df_amenities_listings
+        .merge(df_amenities_p, on='amenities', how='left')
+        [['id', 'amenities_clean']]
+        .rename(columns={'amenities_clean': 'amenities'})
+        .rename(columns={'id': 'listing_id'})
+    )
+
+    print("         Eliminacion de amenities no validos")
+    df_amenities_listings = df_amenities_listings[df_amenities_listings['amenities'] != ''].reset_index(drop=True)
+
+    print("\n       ✅ df_amenities_listings")
+    print(f"            - Filas: {df_amenities_listings.shape[0]}")
+    print(f"            - Columnas: {df_amenities_listings.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_amenities_listings.head()}")
+
+    print("\n   4.11. Creacion de df_amenties limpio y ajuste de df_amenities_listings con Id")
+    print("\n       crear df_amenties limpio y con su amenities_id")
+    df_amenities = df_amenities_listings[['amenities']].drop_duplicates().reset_index(drop=True)
+    df_amenities.insert(0, 'amenities_id', df_amenities.index + 1)
+
+    print("\n       ✅ df_amenities")
+    print(f"            - Filas: {df_amenities.shape[0]}")
+    print(f"            - Columnas: {df_amenities.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_amenities.head()}")
+
+    print("\n       Reasignar el valor amenities de df_amenities_listings por el amenities_id de df_amenties")
+    df_amenities_listings = (
+        df_amenities_listings
+        .merge(df_amenities, on='amenities', how='left')
+        [['listing_id', 'amenities_id']]
+    )
+
+    print("\n       ✅ df_amenities_listings")
+    print(f"            - Filas: {df_amenities_listings.shape[0]}")
+    print(f"            - Columnas: {df_amenities_listings.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_amenities_listings.head()}")
+
+    print("\n   4.12. Mostrar los df cargados y limpios")
+
+    print("\n       ✅ df_listings")
+    print(f"            - Filas: {df_listings.shape[0]}")
+    print(f"            - Columnas: {df_listings.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_listings.head()}")
+    print(df_listings.dtypes)
+
+    print("\n       ✅ df_host")
+    print(f"            - Filas: {df_host.shape[0]}")
+    print(f"            - Columnas: {df_host.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_host.head()}")
+    print(df_host.dtypes)
+
+    print("\n       ✅ df_verification")
+    print(f"            - Filas: {df_verification.shape[0]}")
+    print(f"            - Columnas: {df_verification.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_verification.head()}")
+    print(df_verification.dtypes)
+
+    print("\n       ✅ df_amenities_listings")
+    print(f"            - Filas: {df_amenities_listings.shape[0]}")
+    print(f"            - Columnas: {df_amenities_listings.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_amenities_listings.head()}")
+    print(df_amenities_listings.dtypes)
+
+    print("\n       ✅ df_amenities")
+    print(f"            - Filas: {df_amenities.shape[0]}")
+    print(f"            - Columnas: {df_amenities.shape[1]}")
+    print(f"            - Primeros 5 registros: \n{df_amenities.head()}")
+    print(df_amenities.dtypes)
+
+    return (df_listings, df_host, df_verification, df_amenities_listings, df_amenities)
 
 def _transformacion_reviews(df_reviews: pd.DataFrame, listings_ids: pd.Series):
 
-    print("\n   4.8. Limpieza de df_reviews validando con df_listings")
+    print("\n   4.13. Limpieza de df_reviews validando con df_listings")
     print("         Se limpiara todos los reviews que no tengan un listing valido")
 
     df_reviews = df_reviews[df_reviews['listing_id'].isin(listings_ids)]
@@ -172,7 +282,7 @@ def _transformacion_reviews(df_reviews: pd.DataFrame, listings_ids: pd.Series):
     print(f"            - Filas: {df_reviews.shape[0]}")
     print(f"            - Columnas: {df_reviews.shape[1]}")
 
-    print("\n   4.9. Abstracion de df_reviewer")
+    print("\n   4.14. Abstracion de df_reviewer")
     print("         Se abstrae el df_reviewer del df_reviews y se elimina del df_reviews")
     df_reviewer = df_reviews[['reviewer_id', 'reviewer_name']].drop_duplicates()
 
@@ -213,7 +323,7 @@ def _transformacion_reviews(df_reviews: pd.DataFrame, listings_ids: pd.Series):
 
 def _transformacion_calendar(df_calendar: pd.DataFrame, listings_ids: pd.Series):
 
-    print("\n   4.10. Limpieza de df_calendar validando con df_listings")
+    print("\n   4.15. Limpieza de df_calendar validando con df_listings")
     print("         Se limpiara todos los calendar que no tengan un listing valido")
 
     df_calendar = df_calendar[df_calendar['listing_id'].isin(listings_ids)]
@@ -233,3 +343,19 @@ def _transformacion_calendar(df_calendar: pd.DataFrame, listings_ids: pd.Series)
     print(f"            - Primeros 5 registros: \n{df_calendar.head()}")
 
     return df_calendar
+
+def _clean_text(a):
+    if not isinstance(a, str):
+        return ''
+
+    a = a.lower().strip()
+
+    a = a.replace('-', ' ')
+
+    a = ''.join(
+        c for c in unicodedata.normalize('NFD', a)
+        if unicodedata.category(c) != 'Mn'
+    )
+
+    a = ' '.join(a.split())
+    return a
