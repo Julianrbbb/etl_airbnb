@@ -1,0 +1,47 @@
+================================================================================
+LOG DE EJECUCIÓN - TRANSFORMACION
+Fecha de inicio: 2025-10-23 23:43:41
+================================================================================
+
+[2025-10-23 23:43:41] [INFO] ==================================================
+[2025-10-23 23:43:41] [INFO] INICIO DEL PROCESO DE TRANSFORMACIÓN
+[2025-10-23 23:43:41] [INFO] ==================================================
+--------------------------------------------------------------------------------
+[2025-10-23 23:43:41] [INFO] 4.1. Abstracción de df_host
+[2025-10-23 23:43:41] [INFO] Se abstrae el df_host del df_listings
+[2025-10-23 23:43:41] [INFO] ✅ df_host creado - Filas: 11897, Columnas: 18
+--------------------------------------------------------------------------------
+[2025-10-23 23:43:41] [INFO] 4.2. Eliminación de campos no necesarios en df_host
+[2025-10-23 23:43:41] [INFO] ✅ Campos eliminados - Filas: 11897, Columnas: 11
+--------------------------------------------------------------------------------
+[2025-10-23 23:43:41] [INFO] 4.3. Limpieza del df_host
+[2025-10-23 23:43:41] [INFO] Eliminados 2736 hosts sin información válida
+[2025-10-23 23:43:41] [INFO] Transformando campos de fecha a formato estándar
+[2025-10-23 23:43:41] [INFO] ✅ df_host limpio - Filas: 9161, Columnas: 11
+--------------------------------------------------------------------------------
+[2025-10-23 23:43:41] [INFO] 4.4. Abstracción de df_verification
+[2025-10-23 23:43:42] [INFO] ✅ df_verification creado - Filas: 18664
+[2025-10-23 23:43:42] [INFO] ✅ df_host actualizado - Columnas: 10
+--------------------------------------------------------------------------------
+[2025-10-23 23:43:42] [INFO] 4.5. Limpieza de df_listings validando con df_host
+[2025-10-23 23:43:42] [INFO] Eliminados 6237 listings sin host válido
+[2025-10-23 23:43:42] [INFO] ✅ df_listings - Filas: 20164, Columnas: 62
+--------------------------------------------------------------------------------
+[2025-10-23 23:43:42] [INFO] 4.6. Eliminación de campos redundantes de df_listings
+[2025-10-23 23:43:42] [INFO] ✅ df_listings - Columnas: 33
+--------------------------------------------------------------------------------
+[2025-10-23 23:43:42] [INFO] 4.7. Limpieza de campos df_listings
+[2025-10-23 23:43:42] [INFO] Eliminados 2138 listings sin reviews
+[2025-10-23 23:43:42] [INFO] Transformando campos de fecha a formato estándar
+[2025-10-23 23:43:42] [INFO] Eliminados 2755 listings con reviews antiguas (>1 año)
+[2025-10-23 23:43:42] [INFO] Transformando y validando precios
+[2025-10-23 23:43:42] [INFO] Eliminados 892 listings con precios inválidos
+[2025-10-23 23:43:42] [INFO] Ajustando campos bathrooms_text, bedrooms, beds
+[2025-10-23 23:43:42] [INFO] ✅ df_listings final - Filas: 14379, Columnas: 33
+[2025-10-23 23:43:42] [INFO] ==================================================
+[2025-10-23 23:43:42] [INFO] PROCESO DE TRANSFORMACIÓN COMPLETADO EXITOSAMENTE
+[2025-10-23 23:43:42] [INFO] ==================================================
+
+================================================================================
+Fecha de finalización: 2025-10-23 23:43:42
+================================================================================
