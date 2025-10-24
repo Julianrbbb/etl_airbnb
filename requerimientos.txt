@@ -1,0 +1,15 @@
+# Requisitos para el proyecto ETL - Airbnb México
+# Instalar con: pip install -r requirements.txt
+
+# Manipulación de datos
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Conexión a MongoDB
+pymongo>=4.6.0
+
+# Conexión a SQL Server
+pyodbc>=5.0.0
+
+# Opcional: Para mejor visualización en consola
+colorama>=0.4.6
