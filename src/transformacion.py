@@ -79,6 +79,11 @@ def _transformacion_listings(df_listings: pd.DataFrame):
     print(f"            - Columnas: {df_verification.shape[1]}")
     print(f"            - Primeros 5 registros: \n{df_verification.head()}")
 
+    print("\n   4.5. Abstracion de df_amenities")
+    print("         Se abstrea el df_amenities del df_listings, y eliminando los amenities de listing")
+
+    df_amenities = df_listings[['id', 'amenities']].drop_duplicates()
+
     print("\n   4.5. Limpieza de df_listings validando con df_host")
     print("         Se eliminaran los campos de df_host y se limpiara todos los listings que no tengan un host valido")
 
