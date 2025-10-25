@@ -279,12 +279,7 @@ etl-airbnb-mexico/
 
 ---
 
-## 🐛 Solución de Problemas
-
-### Error: "No module named 'pandas'"
-```bash
-pip install -r requirements.txt
-```
+##  Solución de Problemas
 
 ### Error: "MongoDB connection refused"
 Verificar que MongoDB esté corriendo:
@@ -310,7 +305,6 @@ mkdir logs
 
 ##  Documentación Adicional
 
-- **REQUISITOS_INSTALACION.md**: Guía detallada de instalación y configuración
 - **Logs**: Todos los logs se guardan en `logs/` con timestamp
 - **Comentarios en código**: Cada función está documentada
 
