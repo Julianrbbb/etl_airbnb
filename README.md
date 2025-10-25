@@ -1,10 +1,10 @@
-# ETL Airbnb México
+# 🏠 ETL Airbnb México
 
-##  Descripción del Proyecto
+## 📝 Descripción del Proyecto
 
 Este proyecto implementa un proceso **ETL (Extract, Transform, Load)** completo para el análisis de datos de Airbnb en México. El sistema extrae información de propiedades, reseñas y disponibilidad desde MongoDB, realiza transformaciones y limpieza de datos, y finalmente carga la información normalizada en SQL Server para su análisis.
 
-### Objetivo
+### 🎯 Objetivo
 
 Desarrollar un pipeline ETL robusto que permita:
 - **Extraer** datos crudos de Airbnb almacenados en MongoDB
@@ -12,7 +12,7 @@ Desarrollar un pipeline ETL robusto que permita:
 - **Cargar** los datos limpios en SQL Server en un esquema relacional optimizado
 - **Registrar** todo el proceso mediante logs detallados para auditoría y debugging
 
-###  Estructura de Datos
+### 🗂️ Estructura de Datos
 
 El proyecto procesa y genera las siguientes tablas:
 
@@ -29,23 +29,23 @@ El proyecto procesa y genera las siguientes tablas:
 
 ---
 
-##  Instrucciones de Instalación
+## 🚀 Instrucciones de Instalación
 
-###  Requisitos Previos
+### 📋 Requisitos Previos
 
 - **Python 3.8+**
 - **MongoDB Community Server** (corriendo en `localhost:27017`)
 - **SQL Server 2019+** (Express funciona)
 - **ODBC Driver 17 for SQL Server**
 
-### 1️ Clonar o Descargar el Proyecto
+### 1️⃣ Clonar o Descargar el Proyecto
 
 ```bash
 git clone https://github.com/tu-usuario/etl-airbnb-mexico.git
 cd etl-airbnb-mexico
 ```
 
-### 2️ Crear Entorno Virtual
+### 2️⃣ Crear Entorno Virtual
 
 **Windows:**
 ```bash
@@ -59,7 +59,7 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3️ Instalar Dependencias
+### 3️⃣ Instalar Dependencias
 
 ```bash
 pip install -r requirements.txt
@@ -71,7 +71,7 @@ Esto instalará:
 - `pymongo>=4.6.0` - Conexión a MongoDB
 - `pyodbc>=5.0.0` - Conexión a SQL Server
 
-### 4️ Crear Carpeta de Logs
+### 4️⃣ Crear Carpeta de Logs
 
 ```bash
 # Windows
@@ -81,7 +81,7 @@ mkdir logs
 mkdir -p logs
 ```
 
-### 5️ Configurar Conexiones
+### 5️⃣ Configurar Conexiones
 
 #### MongoDB (archivo `extraccion.py`)
 Si tu MongoDB está en otro servidor o puerto, edita la línea 22:
@@ -100,7 +100,8 @@ conexion = pyodbc.connect(
     "PWD=TU_CONTRASEÑA;"
 )
 ```
-### 6 Ejecutar el ETL
+
+### 6️⃣ Ejecutar el ETL
 
 ```bash
 python main.py
@@ -112,12 +113,13 @@ python main.py
 
 | Nombre | Rol | Responsabilidades |
 |--------|-----|-------------------|
-| **[Julian Andres Ramirez Bedoya]** | Desarrollador ETL | Implementación de extracción (MongoDB), transformación y carga (SQL Server) |
-| **[Maria Jose Gallego Escudero]** | QA / Documentación | Testing, documentación y README |
-| **[Juan Jose rUA dAVID]** | Desarrollador ETL | Exploracion Etl , clase Logs, transformación  y integración |
+| **Julian Andres Ramirez Bedoya** | Desarrollador ETL | Implementación de extracción (MongoDB), transformación y carga (SQL Server) |
+| **Maria Jose Gallego Escudero** | QA / Documentación | Testing, documentación y README |
+| **Juan Jose Rua David** | Desarrollador ETL | Exploración ETL, clase Logs, transformación e integración |
 
+---
 
-##  Ejemplo de Ejecución del ETL
+## 💻 Ejemplo de Ejecución del ETL
 
 ### Ejecución Completa
 
@@ -143,7 +145,6 @@ Fecha de inicio: 2025-10-25 09:53:33
 [2025-10-25 09:53:34] [INFO]    - Filas: 26,401
 [2025-10-25 09:53:34] [INFO]    - Columnas: 79
 [2025-10-25 09:53:34] [INFO]    - Memoria utilizada: 88.34 MB
-[2025-10-25 09:53:34] [INFO]    - Columnas: ['id', 'listing_url', 'scrape_id', 'last_scraped', 'source', 'name', 'description', 'neighborhood_overview', 'picture_url', 'host_id', 'host_url', 'host_name', 'host_since', 'host_location', 'host_about', 'host_response_time', 'host_response_rate', 'host_acceptance_rate', 'host_is_superhost', 'host_thumbnail_url', 'host_picture_url', 'host_neighbourhood', 'host_listings_count', 'host_total_listings_count', 'host_verifications', 'host_has_profile_pic', 'host_identity_verified', 'neighbourhood', 'neighbourhood_cleansed', 'neighbourhood_group_cleansed', 'latitude', 'longitude', 'property_type', 'room_type', 'accommodates', 'bathrooms', 'bathrooms_text', 'bedrooms', 'beds', 'amenities', 'price', 'minimum_nights', 'maximum_nights', 'minimum_minimum_nights', 'maximum_minimum_nights', 'minimum_maximum_nights', 'maximum_maximum_nights', 'minimum_nights_avg_ntm', 'maximum_nights_avg_ntm', 'calendar_updated', 'has_availability', 'availability_30', 'availability_60', 'availability_90', 'availability_365', 'calendar_last_scraped', 'number_of_reviews', 'number_of_reviews_ltm', 'number_of_reviews_l30d', 'availability_eoy', 'number_of_reviews_ly', 'estimated_occupancy_l365d', 'estimated_revenue_l365d', 'first_review', 'last_review', 'review_scores_rating', 'review_scores_accuracy', 'review_scores_cleanliness', 'review_scores_checkin', 'review_scores_communication', 'review_scores_location', 'review_scores_value', 'license', 'instant_bookable', 'calculated_host_listings_count', 'calculated_host_listings_count_entire_homes', 'calculated_host_listings_count_private_rooms', 'calculated_host_listings_count_shared_rooms', 'reviews_per_month']
 --------------------------------------------------------------------------------
 [2025-10-25 09:53:34] [INFO] Consultando colección: Reviews
 [2025-10-25 09:53:34] [INFO] Ejecutando consulta en Reviews...
@@ -152,7 +153,6 @@ Fecha de inicio: 2025-10-25 09:53:33
 [2025-10-25 09:53:55] [INFO]    - Filas: 1,388,226
 [2025-10-25 09:53:55] [INFO]    - Columnas: 6
 [2025-10-25 09:53:55] [INFO]    - Memoria utilizada: 512.60 MB
-[2025-10-25 09:53:55] [INFO]    - Columnas: ['listing_id', 'id', 'date', 'reviewer_id', 'reviewer_name', 'comments']
 --------------------------------------------------------------------------------
 [2025-10-25 09:53:55] [INFO] Consultando colección: Calendar
 [2025-10-25 09:53:55] [INFO] Ejecutando consulta en Calendar...
@@ -161,7 +161,6 @@ Fecha de inicio: 2025-10-25 09:53:33
 [2025-10-25 10:01:47] [INFO]    - Filas: 9,636,365
 [2025-10-25 10:01:47] [INFO]    - Columnas: 7
 [2025-10-25 10:01:47] [INFO]    - Memoria utilizada: 1203.88 MB
-[2025-10-25 10:01:47] [INFO]    - Columnas: ['listing_id', 'date', 'available', 'price', 'adjusted_price', 'minimum_nights', 'maximum_nights']
 --------------------------------------------------------------------------------
 [2025-10-25 10:01:47] [INFO] Validando datos extraídos...
 --------------------------------------------------------------------------------
@@ -174,14 +173,19 @@ Fecha de inicio: 2025-10-25 09:53:33
 [2025-10-25 10:01:49] [INFO] ==================================================
 [2025-10-25 10:01:49] [INFO] PROCESO DE EXTRACCIÓN COMPLETADO EXITOSAMENTE
 [2025-10-25 10:01:49] [INFO] ==================================================
+```
+
 ### Archivos de Log Generados
 
 Después de la ejecución, encontrarás los siguientes logs en la carpeta `logs/`:
 
 ```
 logs/
-├──log_ejecucion_20251025_1027.txt
+└── log_ejecucion_20251025_1027.txt
 ```
+
+---
+
 ## 📊 Arquitectura del Sistema
 
 ```
@@ -221,25 +225,25 @@ logs/
 
 ---
 
-##  Estructura del Proyecto
+## 📁 Estructura del Proyecto
 
 ```
 etl-airbnb-mexico/
 │
 ├── logs/                          # Carpeta para archivos de log
-│   ├── log_ejecucion_20251025_1027.txt
-├── Notebooks/                     # Carpeta para notebook
-    ├── expliracion_airbnb.ipynb   # Notebook de explicación
+│   └── log_ejecucion_20251025_1027.txt
+│
+├── Notebooks/                     # Carpeta para notebooks
+│   └── exploracion_airbnb.ipynb   # Notebook de exploración
 │
 ├── logs.py                        # Clase para registro de logs
-├── carga.py                       # Módulo de carga (SQL Server)
 ├── extraccion.py                  # Módulo de extracción (MongoDB)
-├── main.py                        # Script principal orquestador
 ├── transformacion.py              # Módulo de transformación
-
+├── carga.py                       # Módulo de carga (SQL Server)
+├── main.py                        # Script principal orquestador
 │
 ├── requirements.txt               # Dependencias del proyecto
-├── README.md                      # Este archivo
+└── README.md                      # Este archivo
 ```
 
 ---
@@ -275,7 +279,7 @@ etl-airbnb-mexico/
 
 ---
 
-##  Solución de Problemas
+## 🐛 Solución de Problemas
 
 ### Error: "No module named 'pandas'"
 ```bash
@@ -304,7 +308,7 @@ mkdir logs
 
 ---
 
-##  Documentación Adicional
+## 📚 Documentación Adicional
 
 - **REQUISITOS_INSTALACION.md**: Guía detallada de instalación y configuración
 - **Logs**: Todos los logs se guardan en `logs/` con timestamp
@@ -312,11 +316,11 @@ mkdir logs
 
 ---
 
-##  Métricas del Proyecto
+## 📈 Métricas del Proyecto
 
 - **Líneas de código**: ~1,500
 - **Tablas procesadas**: 8
-- **Registros procesados**: ~6.5 millones
+- **Registros procesados**: ~11 millones
 - **Tiempo promedio de ejecución**: 10-15 minutos
 - **Reducción de datos**: ~17% (limpieza de inconsistencias)
 
@@ -324,7 +328,7 @@ mkdir logs
 
 ## 📄 Licencia
 
-Este proyecto fue desarrollado como parte del curso [Inteligencia de Negocio] en [Intituto Tecnologico Metropolitano].
+Este proyecto fue desarrollado como parte del curso **Inteligencia de Negocio** en el **Instituto Tecnológico Metropolitano**.
 
 ---
 
