@@ -6,30 +6,29 @@ from logs import Logs
 
 __all__ = ['transformacion_df']
 
-def transformacion_df(df_listings: pd.DataFrame, df_reviews: pd.DataFrame, df_calendar: pd.DataFrame):
-  
-    log = Logs(script_name="transformacion")
-    
+def transformacion_df(df_listings: pd.DataFrame, 
+    df_reviews: pd.DataFrame, 
+    df_calendar: pd.DataFrame, 
+    log: Logs):
     try:
-        log.info("=" * 60)
+        log.info("=" * 50)
         log.info("INICIO DEL PROCESO DE TRANSFORMACIÓN")
-        log.info("=" * 60)
+        log.info("=" * 50)
         
         df_listings, df_host, df_verification, df_amenities_listings, df_amenities = _transformacion_listings(df_listings, log)
         df_reviews, df_reviewer = _transformacion_reviews(df_reviews, df_listings['id'], log)
         df_calendar = _transformacion_calendar(df_calendar, df_listings['id'], log)
-        
-        log.info("=" * 60)
-        log.info("PROCESO DE TRANSFORMACIÓN COMPLETADO EXITOSAMENTE")
-        log.info("=" * 60)
-        
-        log.close()
+
         return df_listings, df_reviews, df_calendar, df_host, df_verification, df_amenities_listings, df_amenities, df_reviewer
         
     except Exception as e:
         log.error(f"Error crítico en transformacion_df: {str(e)}")
-        log.close()
         raise
+
+    finally:
+        log.info("=" * 50)
+        log.info("PROCESO DE TRANSFORMACIÓN COMPLETADO EXITOSAMENTE")
+        log.info("=" * 50)
 
 
 def _transformacion_listings(df_listings: pd.DataFrame, log: Logs):

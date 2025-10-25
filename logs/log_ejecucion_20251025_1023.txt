@@ -1,0 +1,193 @@
+================================================================================
+LOG DE EJECUCIÓN - EJECUCION
+Fecha de inicio: 2025-10-25 10:23:33
+================================================================================
+
+[2025-10-25 10:23:33] [INFO] ==================================================
+[2025-10-25 10:23:33] [INFO] INICIO DEL PROCESO DE EXTRACCIÓN
+[2025-10-25 10:23:33] [INFO] ==================================================
+[2025-10-25 10:23:33] [INFO] Intentando conectar a MongoDB (localhost:27017)...
+[2025-10-25 10:23:33] [INFO] ✅ Conexión exitosa a MongoDB
+[2025-10-25 10:23:33] [INFO] Extrayendo colecciones de la base de datos AirbnMexico...
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:33] [INFO] Consultando colección: Listings
+[2025-10-25 10:23:33] [INFO] Ejecutando consulta en Listings...
+[2025-10-25 10:23:34] [INFO] Campo '_id' eliminado del DataFrame
+[2025-10-25 10:23:34] [INFO] ✅ Consulta exitosa de Listings
+[2025-10-25 10:23:34] [INFO]    - Filas: 26,401
+[2025-10-25 10:23:34] [INFO]    - Columnas: 79
+[2025-10-25 10:23:34] [INFO]    - Memoria utilizada: 88.34 MB
+[2025-10-25 10:23:34] [INFO]    - Columnas: ['id', 'listing_url', 'scrape_id', 'last_scraped', 'source', 'name', 'description', 'neighborhood_overview', 'picture_url', 'host_id', 'host_url', 'host_name', 'host_since', 'host_location', 'host_about', 'host_response_time', 'host_response_rate', 'host_acceptance_rate', 'host_is_superhost', 'host_thumbnail_url', 'host_picture_url', 'host_neighbourhood', 'host_listings_count', 'host_total_listings_count', 'host_verifications', 'host_has_profile_pic', 'host_identity_verified', 'neighbourhood', 'neighbourhood_cleansed', 'neighbourhood_group_cleansed', 'latitude', 'longitude', 'property_type', 'room_type', 'accommodates', 'bathrooms', 'bathrooms_text', 'bedrooms', 'beds', 'amenities', 'price', 'minimum_nights', 'maximum_nights', 'minimum_minimum_nights', 'maximum_minimum_nights', 'minimum_maximum_nights', 'maximum_maximum_nights', 'minimum_nights_avg_ntm', 'maximum_nights_avg_ntm', 'calendar_updated', 'has_availability', 'availability_30', 'availability_60', 'availability_90', 'availability_365', 'calendar_last_scraped', 'number_of_reviews', 'number_of_reviews_ltm', 'number_of_reviews_l30d', 'availability_eoy', 'number_of_reviews_ly', 'estimated_occupancy_l365d', 'estimated_revenue_l365d', 'first_review', 'last_review', 'review_scores_rating', 'review_scores_accuracy', 'review_scores_cleanliness', 'review_scores_checkin', 'review_scores_communication', 'review_scores_location', 'review_scores_value', 'license', 'instant_bookable', 'calculated_host_listings_count', 'calculated_host_listings_count_entire_homes', 'calculated_host_listings_count_private_rooms', 'calculated_host_listings_count_shared_rooms', 'reviews_per_month']
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] Validando datos extraídos...
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] RESUMEN DE EXTRACCIÓN:
+[2025-10-25 10:23:34] [INFO]   - Listings: 26,401 registros
+[2025-10-25 10:23:34] [INFO]   - Memoria total: 88.34 MB
+[2025-10-25 10:23:34] [INFO] Conexión a MongoDB cerrada
+[2025-10-25 10:23:34] [INFO] ==================================================
+[2025-10-25 10:23:34] [INFO] PROCESO DE EXTRACCIÓN COMPLETADO EXITOSAMENTE
+[2025-10-25 10:23:34] [INFO] ==================================================
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] ============================================================
+[2025-10-25 10:23:34] [INFO] INICIO DEL PROCESO DE TRANSFORMACIÓN
+[2025-10-25 10:23:34] [INFO] ============================================================
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] 4.1. Abstracción de df_host
+[2025-10-25 10:23:34] [INFO] Se abstrae el df_host del df_listings
+[2025-10-25 10:23:34] [INFO] ✅ df_host - Filas: 11,897, Columnas: 18
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] 4.2. Eliminación de campos no necesarios en df_host
+[2025-10-25 10:23:34] [INFO] ✅ df_host - Filas: 11,897, Columnas: 11
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] 4.3. Limpieza del df_host
+[2025-10-25 10:23:34] [INFO] Eliminación de host con nombre, verificación y locación null
+[2025-10-25 10:23:34] [INFO] Eliminados 2,736 hosts sin información válida
+[2025-10-25 10:23:34] [INFO] Transformando campos de fecha a formato estándar
+[2025-10-25 10:23:34] [INFO] ✅ df_host - Filas: 9,161, Columnas: 11
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] 4.4. Abstracción de df_verification
+[2025-10-25 10:23:34] [INFO] Se abstrae las formas de verificaciones que tiene cada host
+[2025-10-25 10:23:34] [INFO] ✅ df_host - Filas: 9,161, Columnas: 10
+[2025-10-25 10:23:34] [INFO] ✅ df_verification - Filas: 18,664, Columnas: 3
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] 4.5. Limpieza de df_listings validando con df_host
+[2025-10-25 10:23:34] [INFO] Eliminados 6,237 listings sin host válido
+[2025-10-25 10:23:34] [INFO] ✅ df_listings - Filas: 20,164, Columnas: 62
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] 4.6. Eliminación de campos redundantes de df_listings
+[2025-10-25 10:23:34] [INFO] ✅ df_listings - Columnas: 33
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:34] [INFO] 4.7. Limpieza de campos df_listings
+[2025-10-25 10:23:34] [INFO] Eliminados 2,138 listings sin reviews
+[2025-10-25 10:23:34] [INFO] Transformando campos de fecha a formato estándar
+[2025-10-25 10:23:34] [INFO] Eliminados 2,755 listings con reviews antiguas (>1 año)
+[2025-10-25 10:23:34] [INFO] Transformando y validando precios
+[2025-10-25 10:23:35] [INFO] Eliminados 892 listings con precios inválidos
+[2025-10-25 10:23:35] [INFO] Ajustando campos bathrooms_text, bedrooms, beds
+[2025-10-25 10:23:35] [INFO] ✅ df_listings - Filas: 14,379, Columnas: 33
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:35] [INFO] 4.8. Abstracción de df_amenities_listings
+[2025-10-25 10:23:35] [INFO] Se abstrae el df_amenities_listings del df_listings
+[2025-10-25 10:23:35] [INFO] Transformando amenities en lista de Python
+[2025-10-25 10:23:35] [INFO] 'Explotando' cada amenity para ser asignado uno a uno a su listing
+[2025-10-25 10:23:35] [INFO] ✅ df_amenities_listings - Filas: 515,151, Columnas: 2
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:35] [INFO] 4.9. Abstracción de df_amenities
+[2025-10-25 10:23:35] [INFO] ✅ df_amenities preliminar - Filas: 5,402
+[2025-10-25 10:23:35] [INFO] Limpieza de amenities repetidos y calidad de datos
+[2025-10-25 10:23:35] [INFO] ✅ df_amenities_p - Filas: 5,402, Columnas: 2
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:35] [INFO] 4.10. Transformación de amenities limpios a df_amenities_listings
+[2025-10-25 10:23:35] [INFO] Reemplazar amenities con versión limpia y renombrar 'id' a 'listing_id'
+[2025-10-25 10:23:35] [INFO] Eliminados 6 amenities no válidos
+[2025-10-25 10:23:35] [INFO] ✅ df_amenities_listings - Filas: 515,145, Columnas: 2
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:35] [INFO] 4.11. Creación de df_amenities limpio y ajuste con IDs
+[2025-10-25 10:23:35] [INFO] Crear df_amenities limpio con amenities_id
+[2025-10-25 10:23:35] [INFO] ✅ df_amenities - Filas: 4,902, Columnas: 2
+[2025-10-25 10:23:35] [INFO] Reasignar amenities por amenities_id en df_amenities_listings
+[2025-10-25 10:23:35] [INFO] ✅ df_amenities_listings - Filas: 515,145, Columnas: 2
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:35] [INFO] 4.12. RESUMEN DE TABLAS GENERADAS:
+[2025-10-25 10:23:35] [INFO] ✅ df_listings - Filas: 14,379, Columnas: 32
+[2025-10-25 10:23:35] [INFO] ✅ df_host - Filas: 9,161, Columnas: 10
+[2025-10-25 10:23:35] [INFO] ✅ df_verification - Filas: 18,664, Columnas: 3
+[2025-10-25 10:23:35] [INFO] ✅ df_amenities_listings - Filas: 515,145, Columnas: 2
+[2025-10-25 10:23:35] [INFO] ✅ df_amenities - Filas: 4,902, Columnas: 2
+[2025-10-25 10:23:35] [INFO] ============================================================
+[2025-10-25 10:23:35] [INFO] PROCESO DE TRANSFORMACIÓN COMPLETADO EXITOSAMENTE
+[2025-10-25 10:23:35] [INFO] ============================================================
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:35] [INFO] ============================================================
+[2025-10-25 10:23:35] [INFO] INICIO DEL PROCESO DE CARGA
+[2025-10-25 10:23:35] [INFO] ============================================================
+[2025-10-25 10:23:35] [INFO] Intentando conectar a SQL Server...
+[2025-10-25 10:23:35] [INFO] Servidor: DESKTOP-Q68QGU3\JUSERVER
+[2025-10-25 10:23:35] [INFO] Base de datos: AirbnbMexico
+[2025-10-25 10:23:35] [INFO] ✅ Conexión exitosa a SQL Server
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:35] [INFO] Resumen de tablas a cargar:
+[2025-10-25 10:23:35] [INFO]   - host: 9,161 registros, 10 columnas
+[2025-10-25 10:23:35] [INFO]   - verification: 18,664 registros, 3 columnas
+[2025-10-25 10:23:35] [INFO]   - amenities: 4,902 registros, 2 columnas
+[2025-10-25 10:23:35] [INFO]   - listings: 14,379 registros, 32 columnas
+[2025-10-25 10:23:35] [INFO]   - amenities_listings: 515,145 registros, 2 columnas
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:35] [INFO] [1/5] Cargando tabla: host
+[2025-10-25 10:23:35] [INFO] Iniciando carga de tabla: host
+[2025-10-25 10:23:35] [INFO] Registros a cargar: 9,161
+[2025-10-25 10:23:35] [INFO] Columnas: 10
+[2025-10-25 10:23:35] [INFO] Verificando existencia de tabla [host]...
+[2025-10-25 10:23:35] [INFO] Tabla [host] ya existe. Limpiando datos...
+[2025-10-25 10:23:35] [INFO] ✅ Tabla [host] limpiada correctamente
+[2025-10-25 10:23:35] [INFO] Preparando datos para inserción en [host]...
+[2025-10-25 10:23:35] [INFO] Convirtiendo 9,161 filas a formato SQL...
+[2025-10-25 10:23:35] [INFO] Insertando datos en [host]...
+[2025-10-25 10:23:38] [INFO] ✅ 9,161 filas insertadas en [host] correctamente
+[2025-10-25 10:23:38] [INFO] ✅ Tabla host cargada exitosamente
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:38] [INFO] [2/5] Cargando tabla: verification
+[2025-10-25 10:23:38] [INFO] Iniciando carga de tabla: verification
+[2025-10-25 10:23:38] [INFO] Registros a cargar: 18,664
+[2025-10-25 10:23:38] [INFO] Columnas: 3
+[2025-10-25 10:23:38] [INFO] Verificando existencia de tabla [verification]...
+[2025-10-25 10:23:38] [INFO] Tabla [verification] ya existe. Limpiando datos...
+[2025-10-25 10:23:38] [INFO] ✅ Tabla [verification] limpiada correctamente
+[2025-10-25 10:23:38] [INFO] Preparando datos para inserción en [verification]...
+[2025-10-25 10:23:38] [INFO] Convirtiendo 18,664 filas a formato SQL...
+[2025-10-25 10:23:38] [INFO] Insertando datos en [verification]...
+[2025-10-25 10:23:39] [INFO] ✅ 18,664 filas insertadas en [verification] correctamente
+[2025-10-25 10:23:39] [INFO] ✅ Tabla verification cargada exitosamente
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:39] [INFO] [3/5] Cargando tabla: amenities
+[2025-10-25 10:23:39] [INFO] Iniciando carga de tabla: amenities
+[2025-10-25 10:23:39] [INFO] Registros a cargar: 4,902
+[2025-10-25 10:23:39] [INFO] Columnas: 2
+[2025-10-25 10:23:39] [INFO] Verificando existencia de tabla [amenities]...
+[2025-10-25 10:23:39] [INFO] Tabla [amenities] ya existe. Limpiando datos...
+[2025-10-25 10:23:39] [INFO] ✅ Tabla [amenities] limpiada correctamente
+[2025-10-25 10:23:39] [INFO] Preparando datos para inserción en [amenities]...
+[2025-10-25 10:23:39] [INFO] Convirtiendo 4,902 filas a formato SQL...
+[2025-10-25 10:23:39] [INFO] Insertando datos en [amenities]...
+[2025-10-25 10:23:40] [INFO] ✅ 4,902 filas insertadas en [amenities] correctamente
+[2025-10-25 10:23:40] [INFO] ✅ Tabla amenities cargada exitosamente
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:40] [INFO] [4/5] Cargando tabla: listings
+[2025-10-25 10:23:40] [INFO] Iniciando carga de tabla: listings
+[2025-10-25 10:23:40] [INFO] Registros a cargar: 14,379
+[2025-10-25 10:23:40] [INFO] Columnas: 32
+[2025-10-25 10:23:40] [INFO] Verificando existencia de tabla [listings]...
+[2025-10-25 10:23:40] [INFO] Tabla [listings] ya existe. Limpiando datos...
+[2025-10-25 10:23:40] [INFO] ✅ Tabla [listings] limpiada correctamente
+[2025-10-25 10:23:40] [INFO] Preparando datos para inserción en [listings]...
+[2025-10-25 10:23:40] [INFO] Convirtiendo 14,379 filas a formato SQL...
+[2025-10-25 10:23:40] [INFO] Insertando datos en [listings]...
+[2025-10-25 10:23:42] [INFO] ✅ 14,379 filas insertadas en [listings] correctamente
+[2025-10-25 10:23:42] [INFO] ✅ Tabla listings cargada exitosamente
+--------------------------------------------------------------------------------
+[2025-10-25 10:23:42] [INFO] [5/5] Cargando tabla: amenities_listings
+[2025-10-25 10:23:42] [INFO] Iniciando carga de tabla: amenities_listings
+[2025-10-25 10:23:42] [INFO] Registros a cargar: 515,145
+[2025-10-25 10:23:42] [INFO] Columnas: 2
+[2025-10-25 10:23:42] [INFO] Verificando existencia de tabla [amenities_listings]...
+[2025-10-25 10:23:42] [INFO] Tabla [amenities_listings] ya existe. Limpiando datos...
+[2025-10-25 10:23:42] [INFO] ✅ Tabla [amenities_listings] limpiada correctamente
+[2025-10-25 10:23:42] [INFO] Preparando datos para inserción en [amenities_listings]...
+[2025-10-25 10:23:43] [INFO] Convirtiendo 515,145 filas a formato SQL...
+[2025-10-25 10:23:44] [INFO] Insertando datos en [amenities_listings]...
+[2025-10-25 10:24:13] [INFO] ✅ 515,145 filas insertadas en [amenities_listings] correctamente
+[2025-10-25 10:24:13] [INFO] ✅ Tabla amenities_listings cargada exitosamente
+--------------------------------------------------------------------------------
+[2025-10-25 10:24:13] [INFO] RESUMEN DE CARGA:
+[2025-10-25 10:24:13] [INFO]   - Tablas cargadas: 5
+[2025-10-25 10:24:13] [INFO]   - Total de registros: 562,251
+[2025-10-25 10:24:13] [INFO]   - Base de datos: AirbnbMexico
+[2025-10-25 10:24:13] [INFO] Conexión a SQL Server cerrada
+[2025-10-25 10:24:13] [INFO] ============================================================
+[2025-10-25 10:24:13] [INFO] PROCESO DE CARGA COMPLETADO EXITOSAMENTE
+[2025-10-25 10:24:13] [INFO] ============================================================
+
+================================================================================
+Fecha de finalización: 2025-10-25 10:24:13
+================================================================================

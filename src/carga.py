@@ -3,9 +3,9 @@ import pyodbc
 import numpy as np
 from logs import Logs
 
-__all__ = ['conectar_sql', 'cargar_data_frame', 'cargar_datos']
+__all__ = ['cargar_datos']
 
-def conectar_sql(log: Logs):
+def _conectar_sql(log: Logs):
     try:
         log.info("Intentando conectar a SQL Server...")
         log.info("Servidor: DESKTOP-Q68QGU3\\JUSERVER")
@@ -30,7 +30,7 @@ def conectar_sql(log: Logs):
         raise Exception(f"❌ Error de conexión: {e}")
 
 
-def cargar_data_frame(conexion, df: pd.DataFrame, table_name: str, log: Logs):
+def _cargar_data_frame(conexion, df: pd.DataFrame, table_name: str, log: Logs, i: int, totalTablas: int):
     """
     Carga un DataFrame en una tabla de SQL Server.
     
@@ -42,6 +42,7 @@ def cargar_data_frame(conexion, df: pd.DataFrame, table_name: str, log: Logs):
     """
     try:
         log.separator()
+        log.info(f"[{i}/{totalTablas}] Cargando tabla: {table_name}")
         log.info(f"Iniciando carga de tabla: {table_name}")
         log.info(f"Registros a cargar: {len(df):,}")
         log.info(f"Columnas: {df.shape[1]}")
@@ -50,10 +51,10 @@ def cargar_data_frame(conexion, df: pd.DataFrame, table_name: str, log: Logs):
         _insertar_data(conexion, df, table_name, log)
         
         log.info(f"✅ Tabla {table_name} cargada exitosamente")
-        
-    except Exception as e:
-        log.error(f"Error al cargar tabla {table_name}: {e}")
-        raise
+        return True
+
+    except Exception:
+        return False
 
 
 def _crear_tabla(conexion, df: pd.DataFrame, table_name: str, log: Logs):
@@ -118,7 +119,7 @@ def _crear_tabla(conexion, df: pd.DataFrame, table_name: str, log: Logs):
         conexion.commit()
         
         log.info(f"✅ Tabla [{table_name}] creada correctamente en SQL Server")
-        log.info(f"   Total de columnas: {len(columns)}")
+        log.info(f"✅ Total de columnas: {len(columns)}")
         
     except pyodbc.Error as e:
         log.error(f"Error de SQL al crear tabla [{table_name}]: {e}")
@@ -152,7 +153,8 @@ def _insertar_data(conexion, df: pd.DataFrame, table_name: str, log: Logs):
         
         # Convertir DataFrame a lista de tuplas
         log.info(f"Convirtiendo {len(df):,} filas a formato SQL...")
-        data = [tuple(None if pd.isna(x) else x for x in row) for row in df.to_numpy()]
+        data = [tuple(_to_python_value(x) for x in row) for row in df.to_numpy()]
+        #data = [tuple(None if pd.isna(x) else x for x in row) for row in df.to_numpy()]
         
         log.info(f"Insertando datos en [{table_name}]...")
         cursor.executemany(sql, data)
@@ -188,18 +190,17 @@ def _to_python_value(x):
 
 
 def cargar_datos(df_listings, df_reviews, df_calendar, df_host, df_verification, 
-                 df_amenities_listings, df_amenities, df_reviewer):
+    df_amenities_listings, df_amenities, df_reviewer, log: Logs):
 
-    log = Logs(script_name="carga")
     conexion = None
     
     try:
-        log.info("=" * 60)
+        log.info("=" * 50)
         log.info("INICIO DEL PROCESO DE CARGA")
-        log.info("=" * 60)
+        log.info("=" * 50)
         
         # Conectar a SQL Server
-        conexion = conectar_sql(log)
+        conexion = _conectar_sql(log)
         
         # Definir orden de carga (tablas padre primero)
         tablas = [
@@ -213,16 +214,17 @@ def cargar_datos(df_listings, df_reviews, df_calendar, df_host, df_verification,
             (df_calendar, "calendar")
         ]
         
-        log.info("\nResumen de tablas a cargar:")
+        log.separator()
+        log.info("Resumen de tablas a cargar:")
         for df, nombre in tablas:
             log.info(f"  - {nombre}: {len(df):,} registros, {df.shape[1]} columnas")
         
         # Cargar cada tabla
         total_registros = 0
         for i, (df, nombre) in enumerate(tablas, 1):
-            log.info(f"\n[{i}/{len(tablas)}] Cargando tabla: {nombre}")
-            cargar_data_frame(conexion, df, nombre, log)
-            total_registros += len(df)
+            exitoso = _cargar_data_frame(conexion, df, nombre, log, i, len(tablas))
+            if exitoso:
+                total_registros += len(df)
         
         # Resumen final
         log.separator()
@@ -231,18 +233,15 @@ def cargar_datos(df_listings, df_reviews, df_calendar, df_host, df_verification,
         log.info(f"  - Total de registros: {total_registros:,}")
         log.info(f"  - Base de datos: AirbnbMexico")
         
-        log.info("=" * 60)
-        log.info("PROCESO DE CARGA COMPLETADO EXITOSAMENTE")
-        log.info("=" * 60)
-        
-        log.close()
-        
     except Exception as e:
         log.error(f"Error crítico en cargar_datos: {str(e)}")
-        log.close()
         raise
     
     finally:
         if conexion is not None:
             conexion.close()
             log.info("Conexión a SQL Server cerrada")
+    
+        log.info("=" * 50)
+        log.info("PROCESO DE CARGA COMPLETADO EXITOSAMENTE")
+        log.info("=" * 50)

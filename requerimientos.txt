@@ -1,5 +1,7 @@
 # Requisitos para el proyecto ETL - Airbnb México
 # Instalar con: pip install -r requirements.txt
+# Tener una base de datos en MongoDB con los csv de Airbnb Mexico cargados. (Esta es la base de datos donde se extraen los datos iniciales)
+# Tener una base de datos en SQL Server con el nombre de AirbnbMexico o el nombre que mas se le adecude. (Las tablas las crear el mismo proceso de ETL)
 
 # Manipulación de datos
 pandas>=2.0.0

@@ -2,9 +2,9 @@ import pymongo
 import pandas as pd
 from logs import Logs
 
-__all__ = ['conectar_mongo', 'consulta_mongo', 'extraer_datos']
+__all__ = ['extraer_datos']
 
-def conectar_mongo(log: Logs):
+def _conectar_mongo(log: Logs):
     """
     Establece conexión con MongoDB.
     
@@ -38,7 +38,7 @@ def conectar_mongo(log: Logs):
         raise Exception(f"❌ Error de conexión: {e}")
 
 
-def consulta_mongo(conexion, coleccion: str, log: Logs):
+def _consulta_mongo(conexion, coleccion: str, log: Logs):
     """
     Realiza consulta a una colección de MongoDB y retorna un DataFrame.
     
@@ -98,7 +98,7 @@ def consulta_mongo(conexion, coleccion: str, log: Logs):
         raise Exception(f"❌ Error de consulta en '{coleccion}': {e}")
 
 
-def extraer_datos():
+def extraer_datos(log: Logs):
     """
     Función principal para extraer datos de MongoDB.
     Extrae las colecciones: listings, reviews y calendar.
@@ -106,8 +106,6 @@ def extraer_datos():
     Returns:
         tuple: (df_listings, df_reviews, df_calendar)
     """
-    # Inicializar logs
-    log = Logs(script_name="extraccion")
     conexion = None
     
     try:
@@ -116,14 +114,14 @@ def extraer_datos():
         log.info("=" * 50)
         
         # Conectar a MongoDB
-        conexion = conectar_mongo(log)
+        conexion = _conectar_mongo(log)
         
         # Extraer colecciones
-        log.info("\nExtrayendo colecciones de la base de datos AirbnMexico...")
+        log.info("Extrayendo colecciones de la base de datos AirbnMexico...")
         
-        df_listings = consulta_mongo(conexion, "listings", log)
-        df_reviews = consulta_mongo(conexion, "reviews", log)
-        df_calendar = consulta_mongo(conexion, "calendar", log)
+        df_listings = _consulta_mongo(conexion, "Listings", log)
+        df_reviews = _consulta_mongo(conexion, "Reviews", log)
+        df_calendar = _consulta_mongo(conexion, "Calendar", log)
         
         # Validar que se extrajeron datos
         log.separator()
@@ -154,16 +152,10 @@ def extraer_datos():
         
         log.info(f"  - Memoria total: {total_memoria:.2f} MB")
         
-        log.info("=" * 50)
-        log.info("PROCESO DE EXTRACCIÓN COMPLETADO EXITOSAMENTE")
-        log.info("=" * 50)
-        
-        log.close()
         return df_listings, df_reviews, df_calendar
         
     except Exception as e:
         log.error(f"Error crítico en extraer_datos: {str(e)}")
-        log.close()
         raise
     
     finally:
@@ -172,14 +164,6 @@ def extraer_datos():
             conexion.close()
             log.info("Conexión a MongoDB cerrada")
 
-
-# Para uso directo del script
-if __name__ == "__main__":
-    try:
-        df_listings, df_reviews, df_calendar = extraer_datos()
-        print("\n✅ Extracción completada. DataFrames disponibles:")
-        print(f"   - df_listings: {df_listings.shape}")
-        print(f"   - df_reviews: {df_reviews.shape}")
-        print(f"   - df_calendar: {df_calendar.shape}")
-    except Exception as e:
-        print(f"\n❌ Error en la extracción: {e}")
+        log.info("=" * 50)
+        log.info("PROCESO DE EXTRACCIÓN COMPLETADO EXITOSAMENTE")
+        log.info("=" * 50)
