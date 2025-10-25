@@ -1,10 +1,10 @@
-# 🏠 ETL Airbnb México
+#  ETL Airbnb México
 
-## 📝 Descripción del Proyecto
+##  Descripción del Proyecto
 
 Este proyecto implementa un proceso **ETL (Extract, Transform, Load)** completo para el análisis de datos de Airbnb en México. El sistema extrae información de propiedades, reseñas y disponibilidad desde MongoDB, realiza transformaciones y limpieza de datos, y finalmente carga la información normalizada en SQL Server para su análisis.
 
-### 🎯 Objetivo
+###  Objetivo
 
 Desarrollar un pipeline ETL robusto que permita:
 - **Extraer** datos crudos de Airbnb almacenados en MongoDB
@@ -12,7 +12,7 @@ Desarrollar un pipeline ETL robusto que permita:
 - **Cargar** los datos limpios en SQL Server en un esquema relacional optimizado
 - **Registrar** todo el proceso mediante logs detallados para auditoría y debugging
 
-### 🗂️ Estructura de Datos
+###  Estructura de Datos
 
 El proyecto procesa y genera las siguientes tablas:
 
@@ -29,23 +29,23 @@ El proyecto procesa y genera las siguientes tablas:
 
 ---
 
-## 🚀 Instrucciones de Instalación
+##  Instrucciones de Instalación
 
-### 📋 Requisitos Previos
+###  Requisitos Previos
 
 - **Python 3.8+**
 - **MongoDB Community Server** (corriendo en `localhost:27017`)
 - **SQL Server 2019+** (Express funciona)
 - **ODBC Driver 17 for SQL Server**
 
-### 1️⃣ Clonar o Descargar el Proyecto
+### 1️ Clonar o Descargar el Proyecto
 
 ```bash
 git clone https://github.com/tu-usuario/etl-airbnb-mexico.git
 cd etl-airbnb-mexico
 ```
 
-### 2️⃣ Crear Entorno Virtual
+### 2️ Crear Entorno Virtual
 
 **Windows:**
 ```bash
@@ -59,7 +59,7 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3️⃣ Instalar Dependencias
+### 3️ Instalar Dependencias
 
 ```bash
 pip install -r requirements.txt
@@ -71,7 +71,7 @@ Esto instalará:
 - `pymongo>=4.6.0` - Conexión a MongoDB
 - `pyodbc>=5.0.0` - Conexión a SQL Server
 
-### 4️⃣ Crear Carpeta de Logs
+### 4️ Crear Carpeta de Logs
 
 ```bash
 # Windows
@@ -81,7 +81,7 @@ mkdir logs
 mkdir -p logs
 ```
 
-### 5️⃣ Configurar Conexiones
+### 5️ Configurar Conexiones
 
 #### MongoDB (archivo `extraccion.py`)
 Si tu MongoDB está en otro servidor o puerto, edita la línea 22:
@@ -101,7 +101,7 @@ conexion = pyodbc.connect(
 )
 ```
 
-### 6️⃣ Ejecutar el ETL
+### 6️ Ejecutar el ETL
 
 ```bash
 python main.py
@@ -109,7 +109,7 @@ python main.py
 
 ---
 
-## 👥 Integrantes del Grupo
+##  Integrantes del Grupo
 
 | Nombre | Rol | Responsabilidades |
 |--------|-----|-------------------|
@@ -119,7 +119,7 @@ python main.py
 
 ---
 
-## 💻 Ejemplo de Ejecución del ETL
+##  Ejemplo de Ejecución del ETL
 
 ### Ejecución Completa
 
@@ -186,7 +186,7 @@ logs/
 
 ---
 
-## 📊 Arquitectura del Sistema
+##  Arquitectura del Sistema
 
 ```
 ┌─────────────────┐
@@ -225,7 +225,7 @@ logs/
 
 ---
 
-## 📁 Estructura del Proyecto
+##  Estructura del Proyecto
 
 ```
 etl-airbnb-mexico/
@@ -248,7 +248,7 @@ etl-airbnb-mexico/
 
 ---
 
-## 🔧 Características Técnicas
+##  Características Técnicas
 
 ### Sistema de Logs
 - ✅ Archivo por ejecución con timestamp único
@@ -308,7 +308,7 @@ mkdir logs
 
 ---
 
-## 📚 Documentación Adicional
+##  Documentación Adicional
 
 - **REQUISITOS_INSTALACION.md**: Guía detallada de instalación y configuración
 - **Logs**: Todos los logs se guardan en `logs/` con timestamp
@@ -316,7 +316,7 @@ mkdir logs
 
 ---
 
-## 📈 Métricas del Proyecto
+##  Métricas del Proyecto
 
 - **Líneas de código**: ~1,500
 - **Tablas procesadas**: 8
@@ -326,13 +326,13 @@ mkdir logs
 
 ---
 
-## 📄 Licencia
+##  Licencia
 
 Este proyecto fue desarrollado como parte del curso **Inteligencia de Negocio** en el **Instituto Tecnológico Metropolitano**.
 
 ---
 
-## ✅ Checklist de Ejecución
+##  Checklist de Ejecución
 
 Antes de ejecutar el ETL, asegúrate de:
 
@@ -345,4 +345,4 @@ Antes de ejecutar el ETL, asegúrate de:
 - [ ] Credenciales configuradas en `carga.py`
 - [ ] Carpeta `logs/` creada
 
-✅ **¡Listo para ejecutar!** → `python main.py`
+ **¡Listo para ejecutar!** → `python main.py`
