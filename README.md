@@ -100,23 +100,7 @@ conexion = pyodbc.connect(
     "PWD=TU_CONTRASEÑA;"
 )
 ```
-
-### 6️ Verificar Requisitos
-
-Antes de ejecutar el ETL, verifica que todo esté configurado:
-
-```bash
-python verificar_requisitos.py
-```
-
-Este script verificará:
--  Versión de Python
--  Bibliotecas instaladas
--  Conexión a MongoDB
--  Conexión a SQL Server
--  Estructura del proyecto
-
-### 7️ Ejecutar el ETL
+### 6 Ejecutar el ETL
 
 ```bash
 python main.py
