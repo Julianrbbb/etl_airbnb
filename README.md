@@ -1,10 +1,10 @@
-# ETL Airbnb México
+#  ETL Airbnb México
 
 ##  Descripción del Proyecto
 
 Este proyecto implementa un proceso **ETL (Extract, Transform, Load)** completo para el análisis de datos de Airbnb en México. El sistema extrae información de propiedades, reseñas y disponibilidad desde MongoDB, realiza transformaciones y limpieza de datos, y finalmente carga la información normalizada en SQL Server para su análisis.
 
-### Objetivo
+###  Objetivo
 
 Desarrollar un pipeline ETL robusto que permita:
 - **Extraer** datos crudos de Airbnb almacenados en MongoDB
@@ -101,22 +101,7 @@ conexion = pyodbc.connect(
 )
 ```
 
-### 6️ Verificar Requisitos
-
-Antes de ejecutar el ETL, verifica que todo esté configurado:
-
-```bash
-python verificar_requisitos.py
-```
-
-Este script verificará:
--  Versión de Python
--  Bibliotecas instaladas
--  Conexión a MongoDB
--  Conexión a SQL Server
--  Estructura del proyecto
-
-### 7️ Ejecutar el ETL
+### 6️ Ejecutar el ETL
 
 ```bash
 python main.py
@@ -124,22 +109,13 @@ python main.py
 
 ---
 
-## 👥 Integrantes del Grupo
+##  Integrantes del Grupo
 
 | Nombre | Rol | Responsabilidades |
 |--------|-----|-------------------|
-| **[Julian Andres Ramirez Bedoya]** | Desarrollador ETL | Implementación de extracción (MongoDB), transformación y carga (SQL Server) |
-| **[Maria Jose Gallego Escudero]** | QA / Documentación | Testing, documentación y README |
-| **[Juan Jose rUA dAVID]** | Desarrollador ETL | Exploracion Etl , clase Logs, transformación  y integración |
-
-### Contribuciones Específicas
-
-- **Extracción (`extraccion.py`)**: [Nombre 2]
-- **Transformación (`transformacion.py`)**: [Nombre 3]
-- **Carga (`carga.py`)**: [Nombre 4]
-- **Sistema de Logs (`logs.py`)**: [Nombre 2]
-- **Integración (`main.py`)**: [Nombre 1]
-- **Documentación y Testing**: [Nombre 5]
+| **Julian Andres Ramirez Bedoya** | Desarrollador ETL | Implementación de extracción (MongoDB), transformación y carga (SQL Server) |
+| **Maria Jose Gallego Escudero** | QA / Documentación | Testing, documentación y README |
+| **Juan Jose Rua David** | Desarrollador ETL | Exploración ETL, clase Logs, transformación e integración |
 
 ---
 
@@ -151,46 +127,52 @@ python main.py
 (venv) C:\proyecto> python main.py
 
 ================================================================================
-PROCESO ETL - AIRBNB MÉXICO
-================================================================================
-Inicio: 2025-10-24 14:30:45
-
-================================================================================
-FASE 1: EXTRACCIÓN DE DATOS DESDE MONGODB
+LOG DE EJECUCIÓN - EJECUCION
+Fecha de inicio: 2025-10-25 09:53:33
 ================================================================================
 
-Extracción completada:
-   - Listings: 18,431 registros
-   - Reviews: 368,325 registros
-   - Calendar: 6,727,315 registros
-
-================================================================================
-FASE 2: TRANSFORMACIÓN Y NORMALIZACIÓN DE DATOS
-================================================================================
-
- Transformación completada:
-   - Listings: 15,234 registros
-   - Host: 12,450 registros
-   - Verification: 45,823 registros
-   - Amenities: 156 registros
-   - Amenities-Listings: 245,892 registros
-   - Reviews: 352,108 registros
-   - Reviewer: 168,234 registros
-   - Calendar: 5,562,261 registros
-
-================================================================================
-FASE 3: CARGA DE DATOS A SQL SERVER
-================================================================================
-
- Carga completada
-
-================================================================================
- PROCESO ETL COMPLETADO EXITOSAMENTE
-================================================================================
-Fin: 2025-10-24 14:45:22
-
-Revisa los logs en la carpeta 'logs/' para más detalles
-================================================================================
+[2025-10-25 09:53:33] [INFO] ==================================================
+[2025-10-25 09:53:33] [INFO] INICIO DEL PROCESO DE EXTRACCIÓN
+[2025-10-25 09:53:33] [INFO] ==================================================
+[2025-10-25 09:53:33] [INFO] Intentando conectar a MongoDB (localhost:27017)...
+[2025-10-25 09:53:33] [INFO] ✅ Conexión exitosa a MongoDB
+[2025-10-25 09:53:33] [INFO] Extrayendo colecciones de la base de datos AirbnMexico...
+--------------------------------------------------------------------------------
+[2025-10-25 09:53:33] [INFO] Consultando colección: Listings
+[2025-10-25 09:53:33] [INFO] Ejecutando consulta en Listings...
+[2025-10-25 09:53:34] [INFO] Campo '_id' eliminado del DataFrame
+[2025-10-25 09:53:34] [INFO] ✅ Consulta exitosa de Listings
+[2025-10-25 09:53:34] [INFO]    - Filas: 26,401
+[2025-10-25 09:53:34] [INFO]    - Columnas: 79
+[2025-10-25 09:53:34] [INFO]    - Memoria utilizada: 88.34 MB
+--------------------------------------------------------------------------------
+[2025-10-25 09:53:34] [INFO] Consultando colección: Reviews
+[2025-10-25 09:53:34] [INFO] Ejecutando consulta en Reviews...
+[2025-10-25 09:53:54] [INFO] Campo '_id' eliminado del DataFrame
+[2025-10-25 09:53:55] [INFO] ✅ Consulta exitosa de Reviews
+[2025-10-25 09:53:55] [INFO]    - Filas: 1,388,226
+[2025-10-25 09:53:55] [INFO]    - Columnas: 6
+[2025-10-25 09:53:55] [INFO]    - Memoria utilizada: 512.60 MB
+--------------------------------------------------------------------------------
+[2025-10-25 09:53:55] [INFO] Consultando colección: Calendar
+[2025-10-25 09:53:55] [INFO] Ejecutando consulta en Calendar...
+[2025-10-25 10:01:45] [INFO] Campo '_id' eliminado del DataFrame
+[2025-10-25 10:01:47] [INFO] ✅ Consulta exitosa de Calendar
+[2025-10-25 10:01:47] [INFO]    - Filas: 9,636,365
+[2025-10-25 10:01:47] [INFO]    - Columnas: 7
+[2025-10-25 10:01:47] [INFO]    - Memoria utilizada: 1203.88 MB
+--------------------------------------------------------------------------------
+[2025-10-25 10:01:47] [INFO] Validando datos extraídos...
+--------------------------------------------------------------------------------
+[2025-10-25 10:01:47] [INFO] RESUMEN DE EXTRACCIÓN:
+[2025-10-25 10:01:47] [INFO]   - Listings: 26,401 registros
+[2025-10-25 10:01:47] [INFO]   - Reviews: 1,388,226 registros
+[2025-10-25 10:01:47] [INFO]   - Calendar: 9,636,365 registros
+[2025-10-25 10:01:49] [INFO]   - Memoria total: 1804.82 MB
+[2025-10-25 10:01:49] [INFO] Conexión a MongoDB cerrada
+[2025-10-25 10:01:49] [INFO] ==================================================
+[2025-10-25 10:01:49] [INFO] PROCESO DE EXTRACCIÓN COMPLETADO EXITOSAMENTE
+[2025-10-25 10:01:49] [INFO] ==================================================
 ```
 
 ### Archivos de Log Generados
@@ -199,64 +181,12 @@ Después de la ejecución, encontrarás los siguientes logs en la carpeta `logs/
 
 ```
 logs/
-├── log_extraccion_20251024_1430.txt
-├── log_transformacion_20251024_1435.txt
-└── log_carga_20251024_1442.txt
-```
-
-### Ejemplo de Contenido de Log
-
-**log_transformacion_20251024_1435.txt:**
-```
-================================================================================
-LOG DE EJECUCIÓN - TRANSFORMACION
-Fecha de inicio: 2025-10-24 14:35:12
-================================================================================
-
-[2025-10-24 14:35:12] [INFO] ==============================================================
-[2025-10-24 14:35:12] [INFO] INICIO DEL PROCESO DE TRANSFORMACIÓN
-[2025-10-24 14:35:12] [INFO] ==============================================================
---------------------------------------------------------------------------------
-[2025-10-24 14:35:12] [INFO] 4.1. Abstracción de df_host
-[2025-10-24 14:35:12] [INFO] Se abstrae el df_host del df_listings
-[2025-10-24 14:35:13] [INFO] ✅ df_host - Filas: 12,856, Columnas: 18
---------------------------------------------------------------------------------
-[2025-10-24 14:35:13] [INFO] 4.2. Eliminación de campos no necesarios en df_host
-[2025-10-24 14:35:13] [INFO] ✅ df_host - Filas: 12,856, Columnas: 11
---------------------------------------------------------------------------------
-[2025-10-24 14:35:13] [INFO] 4.3. Limpieza del df_host
-[2025-10-24 14:35:13] [INFO] Eliminación de host con nombre, verificación y locación null
-[2025-10-24 14:35:14] [INFO] Eliminados 406 hosts sin información válida
-[2025-10-24 14:35:14] [INFO] Transformando campos de fecha a formato estándar
-[2025-10-24 14:35:14] [INFO] ✅ df_host - Filas: 12,450, Columnas: 11
-...
-```
-
-### Ejecución por Fases (Opcional)
-
-Si deseas ejecutar solo una fase específica:
-
-**Solo Extracción:**
-```python
-from extraccion import extraer_datos
-df_listings, df_reviews, df_calendar = extraer_datos()
-```
-
-**Solo Transformación:**
-```python
-from transformacion import transformacion_df
-result = transformacion_df(df_listings, df_reviews, df_calendar)
-```
-
-**Solo Carga:**
-```python
-from carga import cargar_datos
-cargar_datos(df_listings, df_reviews, df_calendar, df_host, ...)
+└── log_ejecucion_20251025_1027.txt
 ```
 
 ---
 
-## 📊 Arquitectura del Sistema
+##  Arquitectura del Sistema
 
 ```
 ┌─────────────────┐
@@ -301,26 +231,24 @@ cargar_datos(df_listings, df_reviews, df_calendar, df_host, ...)
 etl-airbnb-mexico/
 │
 ├── logs/                          # Carpeta para archivos de log
-│   ├── log_extraccion_*.txt
-│   ├── log_transformacion_*.txt
-│   └── log_carga_*.txt
-├── Notebooks/                     # Carpeta para notebook
-    ├── expliracion_airbnb.ipynb   # Notebook de explicación
+│   └── log_ejecucion_20251025_1027.txt
+│
+├── Notebooks/                     # Carpeta para notebooks
+│   └── exploracion_airbnb.ipynb   # Notebook de exploración
 │
 ├── logs.py                        # Clase para registro de logs
-├── carga.py                       # Módulo de carga (SQL Server)
 ├── extraccion.py                  # Módulo de extracción (MongoDB)
-├── main.py                        # Script principal orquestador
 ├── transformacion.py              # Módulo de transformación
-
+├── carga.py                       # Módulo de carga (SQL Server)
+├── main.py                        # Script principal orquestador
 │
 ├── requirements.txt               # Dependencias del proyecto
-├── README.md                      # Este archivo
+└── README.md                      # Este archivo
 ```
 
 ---
 
-## 🔧 Características Técnicas
+##  Características Técnicas
 
 ### Sistema de Logs
 - ✅ Archivo por ejecución con timestamp único
@@ -353,16 +281,11 @@ etl-airbnb-mexico/
 
 ##  Solución de Problemas
 
-### Error: "No module named 'pandas'"
-```bash
-pip install -r requirements.txt
-```
-
 ### Error: "MongoDB connection refused"
 Verificar que MongoDB esté corriendo:
 ```bash
 # Windows
-net start MongoDB
+mongod
 
 # Linux
 sudo systemctl start mongod
@@ -382,7 +305,6 @@ mkdir logs
 
 ##  Documentación Adicional
 
-- **REQUISITOS_INSTALACION.md**: Guía detallada de instalación y configuración
 - **Logs**: Todos los logs se guardan en `logs/` con timestamp
 - **Comentarios en código**: Cada función está documentada
 
@@ -392,19 +314,19 @@ mkdir logs
 
 - **Líneas de código**: ~1,500
 - **Tablas procesadas**: 8
-- **Registros procesados**: ~6.5 millones
+- **Registros procesados**: ~11 millones
 - **Tiempo promedio de ejecución**: 10-15 minutos
 - **Reducción de datos**: ~17% (limpieza de inconsistencias)
 
 ---
 
-## 📄 Licencia
+##  Licencia
 
-Este proyecto fue desarrollado como parte del curso [Inteligencia de Negocio] en [Intituto Tecnologico Metropolitano].
+Este proyecto fue desarrollado como parte del curso **Inteligencia de Negocio** en el **Instituto Tecnológico Metropolitano**.
 
 ---
 
-## ✅ Checklist de Ejecución
+##  Checklist de Ejecución
 
 Antes de ejecutar el ETL, asegúrate de:
 
@@ -416,6 +338,5 @@ Antes de ejecutar el ETL, asegúrate de:
 - [ ] Base de datos `AirbnbMexico` creada en SQL Server
 - [ ] Credenciales configuradas en `carga.py`
 - [ ] Carpeta `logs/` creada
-- [ ] Verificación ejecutada (`python verificar_requisitos.py`)
 
-✅ **¡Listo para ejecutar!** → `python main.py`
+ **¡Listo para ejecutar!** → `python main.py`
